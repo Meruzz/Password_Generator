@@ -1,3 +1,4 @@
+
 let longitud = document.getElementById('longitud');
 let longitudValor = document.getElementById('longitudValor');
 let mayusculas = document.getElementById('mayusculas');
@@ -6,12 +7,15 @@ let simbolos = document.getElementById('simbolos');
 let boton = document.getElementById('generar');
 let contrasena = document.getElementById('contrasena');
 let copiarBoton = document.getElementById('copiar');
+let limpiarBoton = document.getElementById('limpiar');
 let fuerzaIndicador = document.getElementById('fuerza');
 
+// Actualizar el valor mostrado de la longitud de la contraseña
 longitud.addEventListener('input', function() {
     longitudValor.textContent = longitud.value;
 });
 
+// Función para generar la contraseña
 function generar() {
     let caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyz';
     if (mayusculas.checked) caracteresPermitidos += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -28,12 +32,21 @@ function generar() {
     evaluarFuerza(password);
 }
 
+// función para copiar la contraseña al portapapeles
 function copiarContrasena() {
     contrasena.select();
     document.execCommand('copy');
     alert('Contraseña copiada al portapapeles');
 }
 
+// función para limpiar el campo de contraseña
+function limpiarContrasena() {
+    contrasena.value = '';
+    fuerzaIndicador.textContent = '';
+    fuerzaIndicador.style.color = '';
+}
+
+// función para evaluar la fuerza de la contraseña
 function evaluarFuerza(password) {
     let fuerza = 0;
     if (password.match(/[a-z]+/)) fuerza += 1;
@@ -64,3 +77,4 @@ function evaluarFuerza(password) {
 
 boton.addEventListener('click', generar);
 copiarBoton.addEventListener('click', copiarContrasena);
+limpiarBoton.addEventListener('click', limpiarContrasena);

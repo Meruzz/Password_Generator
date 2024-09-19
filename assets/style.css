@@ -108,8 +108,9 @@ input[type="range"] {
     color: white;
 }
 
-.boton--copiar {
+.boton--copiar, .boton--limpiar {
     width: auto;
+    padding: 12px 15px;
 }
 
 .fuerza {
@@ -120,4 +121,23 @@ input[type="range"] {
 #fuerza {
     padding: 3px 8px;
     border-radius: 3px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .resultado {
+        flex-direction: column;
+    }
+
+    .boton--copiar, .boton--limpiar {
+        width: 100%;
+        margin-top: 10px;
+    }
 }
