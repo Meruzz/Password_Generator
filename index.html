@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Generador de contraseñas</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <main class="container">
+        <div class="container__contenido">
+            <div class="container__informacion">
+                <h1>Generador<span class="container__texto-azul"> de Contraseñas</span></h1>
+                <div class="container__opciones">
+                    <div class="container__campo">
+                        <label for="longitud">Longitud: <span id="longitudValor">8</span> caracteres</label>
+                        <input type="range" id="longitud" min="8" max="60" value="8">
+                    </div>
+                    <div class="container__campo checkbox">
+                        <label><input type="checkbox" id="mayusculas" checked> Letras mayúsculas</label>
+                    </div>
+                    <div class="container__campo checkbox">
+                        <label><input type="checkbox" id="numeros" checked> Números</label>
+                    </div>
+                    <div class="container__campo checkbox">
+                        <label><input type="checkbox" id="simbolos" checked> Símbolos</label>
+                    </div>
+                </div>
+                <div class="container__campo">
+                    <button class="boton" id="generar">Generar Contraseña</button>
+                </div>
+                <div class="container__campo resultado">
+                    <input class="container__contrasena" type="text" id="contrasena" placeholder="Tu contraseña aparecerá aquí" readonly>
+                    <button class="boton boton--copiar" id="copiar">Copiar</button>
+                </div>
+                <div class="container__campo fuerza">
+                    <p>Fuerza de la contraseña: <span id="fuerza"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="main.js"></script> 
+</body>
+</html>
