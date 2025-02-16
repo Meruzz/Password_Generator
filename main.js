@@ -1,4 +1,3 @@
-
 let longitud = document.getElementById('longitud');
 let longitudValor = document.getElementById('longitudValor');
 let mayusculas = document.getElementById('mayusculas');
@@ -9,6 +8,9 @@ let contrasena = document.getElementById('contrasena');
 let copiarBoton = document.getElementById('copiar');
 let limpiarBoton = document.getElementById('limpiar');
 let fuerzaIndicador = document.getElementById('fuerza');
+
+const historialContraseñas = [];
+const MAX_HISTORIAL = 5;
 
 // Actualizar el valor mostrado de la longitud de la contraseña
 longitud.addEventListener('input', function() {
@@ -30,13 +32,31 @@ function generar() {
 
     contrasena.value = password;
     evaluarFuerza(password);
+
+    // Guardar en historial
+    if (password) {
+        historialContraseñas.unshift(password);
+        if (historialContraseñas.length > MAX_HISTORIAL) {
+            historialContraseñas.pop();
+        }
+        actualizarHistorial();
+    }
 }
 
 // función para copiar la contraseña al portapapeles
 function copiarContrasena() {
-    contrasena.select();
-    document.execCommand('copy');
-    alert('Contraseña copiada al portapapeles');
+    if (contrasena.value) {
+        navigator.clipboard.writeText(contrasena.value)
+            .then(() => {
+                const notificacion = document.getElementById('notificacion');
+                notificacion.textContent = 'Contraseña copiada';
+                notificacion.style.display = 'block';
+                setTimeout(() => {
+                    notificacion.style.display = 'none';
+                }, 2000);
+            })
+            .catch(err => console.error('Error al copiar:', err));
+    }
 }
 
 // función para limpiar el campo de contraseña
@@ -73,6 +93,48 @@ function evaluarFuerza(password) {
             fuerzaIndicador.style.color = "green";
             break;
     }
+}
+
+function actualizarHistorial() {
+    const historialLista = document.getElementById('historial-lista');
+    historialLista.innerHTML = '';
+    historialContraseñas.forEach((pass, index) => {
+        const li = document.createElement('li');
+        // Truncar contraseña si es muy larga
+        const passDisplay = pass.length > 25 ? pass.substring(0, 25) + '...' : pass;
+        li.innerHTML = `<span title="${pass}">${passDisplay}</span>`;
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = 'Copiar';
+        copyBtn.className = 'boton boton--pequeño';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(pass)
+                .then(() => {
+                    const notificacion = document.getElementById('notificacion');
+                    notificacion.textContent = 'Contraseña copiada';
+                    notificacion.style.display = 'block';
+                    setTimeout(() => {
+                        notificacion.style.display = 'none';
+                    }, 2000);
+                })
+                .catch(err => console.error('Error al copiar:', err));
+        };
+        li.appendChild(copyBtn);
+        historialLista.appendChild(li);
+    });
+}
+
+// Función para exportar contraseñas
+function exportarContraseñas() {
+    const texto = historialContraseñas.join('\n');
+    const blob = new Blob([texto], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'contraseñas_generadas.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 boton.addEventListener('click', generar);

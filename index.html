@@ -41,6 +41,16 @@
                 <div class="container__campo fuerza">
                     <p>Fuerza de la contraseña: <span id="fuerza"></span></p>
                 </div>
+                <div class="container__campo">
+                    <div id="notificacion" class="notificacion"></div>
+                </div>
+                <div class="container__historial">
+                    <h3>Historial de contraseñas generadas</h3>
+                    <ul id="historial-lista"></ul>
+                    <button class="boton boton--exportar" onclick="exportarContraseñas()">
+                        Exportar historial
+                    </button>
+                </div>
             </div>
         </div>
     </main>
