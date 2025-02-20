@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,8 @@
     <title>Generador de contraseñas</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body>
+<body class="dark">
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌓</button>
     <main class="container">
         <div class="container__contenido">
             <div class="container__informacion">
@@ -34,12 +35,16 @@
                     <button class="boton" id="generar">Generar Contraseña</button>
                 </div>
                 <div class="container__campo resultado">
-                    <input class="container__contrasena" type="text" id="contrasena" placeholder="Tu contraseña aparecerá aquí" readonly>
+                    <div class="password-wrapper">
+                        <input class="container__contrasena" type="password" id="contrasena" placeholder="Tu contraseña aparecerá aquí" readonly>
+                        <button id="toggle-visibility" class="toggle-visibility" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+                    </div>
                     <button class="boton boton--copiar" id="copiar">Copiar</button>
                     <button class="boton boton--limpiar" id="limpiar">Limpiar</button>
                 </div>
                 <div class="container__campo fuerza">
                     <p>Fuerza de la contraseña: <span id="fuerza"></span></p>
+                    <div class="strength-meter" id="strengthMeter"></div>
                 </div>
                 <div class="container__campo">
                     <div id="notificacion" class="notificacion"></div>

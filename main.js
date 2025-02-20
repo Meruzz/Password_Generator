@@ -17,6 +17,27 @@ longitud.addEventListener('input', function() {
     longitudValor.textContent = longitud.value;
 });
 
+// Configuración del tema
+const themeToggle = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.body.classList.add(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', 
+        document.body.classList.contains('light') ? 'light' : 'dark'
+    );
+});
+
+// Configuración de visibilidad de contraseña
+const toggleVisibility = document.getElementById('toggle-visibility');
+toggleVisibility.addEventListener('click', () => {
+    const type = contrasena.type === 'password' ? 'text' : 'password';
+    contrasena.type = type;
+    toggleVisibility.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+});
+
 // Función para generar la contraseña
 function generar() {
     let caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyz';
@@ -66,32 +87,42 @@ function limpiarContrasena() {
     fuerzaIndicador.style.color = '';
 }
 
-// función para evaluar la fuerza de la contraseña
+// Función mejorada para evaluar la fuerza
 function evaluarFuerza(password) {
-    let fuerza = 0;
-    if (password.match(/[a-z]+/)) fuerza += 1;
-    if (password.match(/[A-Z]+/)) fuerza += 1;
-    if (password.match(/[0-9]+/)) fuerza += 1;
-    if (password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/)) fuerza += 1;
+    let score = 0;
+    const strengthMeter = document.getElementById('strengthMeter');
+    
+    // Longitud (máximo 2 puntos)
+    if (password.length >= 12) score += 2;
+    else if (password.length >= 8) score += 1;
 
-    switch (fuerza) {
-        case 0:
-        case 1:
-            fuerzaIndicador.textContent = "Débil";
-            fuerzaIndicador.style.color = "red";
-            break;
-        case 2:
-            fuerzaIndicador.textContent = "Moderada";
-            fuerzaIndicador.style.color = "orange";
-            break;
-        case 3:
-            fuerzaIndicador.textContent = "Fuerte";
-            fuerzaIndicador.style.color = "yellow";
-            break;
-        case 4:
-            fuerzaIndicador.textContent = "Muy fuerte";
-            fuerzaIndicador.style.color = "green";
-            break;
+    // Tipos de caracteres (máximo 4 puntos)
+    if (password.match(/[a-z]/)) score += 1;
+    if (password.match(/[A-Z]/)) score += 1;
+    if (password.match(/[0-9]/)) score += 1;
+    if (password.match(/[^a-zA-Z0-9]/)) score += 1;
+
+    // Actualizar indicador visual
+    strengthMeter.className = 'strength-meter';
+    fuerzaIndicador.style.color = '';
+
+    // Determinar nivel basado en score total (máximo 6 puntos)
+    if (score <= 2) {
+        fuerzaIndicador.textContent = "Débil";
+        fuerzaIndicador.style.color = "#ff4444";
+        strengthMeter.classList.add('weak');
+    } else if (score <= 3) {
+        fuerzaIndicador.textContent = "Moderada";
+        fuerzaIndicador.style.color = "#ffbb33";
+        strengthMeter.classList.add('moderate');
+    } else if (score <= 4) {
+        fuerzaIndicador.textContent = "Fuerte";
+        fuerzaIndicador.style.color = "#00C851";
+        strengthMeter.classList.add('strong');
+    } else {
+        fuerzaIndicador.textContent = "Muy fuerte";
+        fuerzaIndicador.style.color = "#007E33";
+        strengthMeter.classList.add('very-strong');
     }
 }
 
