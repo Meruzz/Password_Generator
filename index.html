@@ -12,6 +12,55 @@
 </head>
 <body class="dark">
     <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌓</button>
+    
+    <!-- Agregar el panel de atajos de teclado -->
+    <div class="keyboard-shortcuts-info" tabindex="0">
+        <button class="keyboard-info-toggle" aria-label="Mostrar atajos de teclado">⌨️</button>
+        <div class="keyboard-shortcuts-panel">
+            <h3>Atajos de teclado</h3>
+            <ul>
+                <li>
+                    <div class="shortcut-description">Generar contraseña</div>
+                    <div class="shortcut-keys">
+                        <kbd>Alt</kbd><kbd>G</kbd>
+                    </div>
+                </li>
+                <li>
+                    <div class="shortcut-description">Copiar contraseña</div>
+                    <div class="shortcut-keys">
+                        <kbd>Alt</kbd><kbd>C</kbd>
+                    </div>
+                </li>
+                <li>
+                    <div class="shortcut-description">Limpiar contraseña</div>
+                    <div class="shortcut-keys">
+                        <kbd>Alt</kbd><kbd>L</kbd>
+                    </div>
+                </li>
+                <li>
+                    <div class="shortcut-description">Cambiar tema</div>
+                    <div class="shortcut-keys">
+                        <kbd>Alt</kbd><kbd>T</kbd>
+                    </div>
+                </li>
+                <li>
+                    <div class="shortcut-description">Mostrar/ocultar contraseña</div>
+                    <div class="shortcut-keys">
+                        <kbd>Alt</kbd><kbd>M</kbd>
+                    </div>
+                </li>
+                <li>
+                    <div class="shortcut-description">Navegar historial</div>
+                    <div class="shortcut-keys">
+                        <kbd>↑</kbd><kbd>↓</kbd>
+                    </div>
+                </li>
+                <li><kbd>Tab</kbd> - Navegar elementos</li>
+                <li><kbd>Enter</kbd> - Activar botón/control</li>
+            </ul>
+        </div>
+    </div>
+
     <main class="container">
         <div class="container__contenido">
             <div class="container__informacion">
@@ -59,6 +108,6 @@
             </div>
         </div>
     </main>
-    <script src="main.js"></script> 
+    <script type="module" src="main.js"></script> 
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { KeyboardSupport } from './assets/js/keyboardSupport.js';
+
 let longitud = document.getElementById('longitud');
 let longitudValor = document.getElementById('longitudValor');
 let mayusculas = document.getElementById('mayusculas');
@@ -37,6 +39,16 @@ toggleVisibility.addEventListener('click', () => {
     contrasena.type = type;
     toggleVisibility.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
 });
+
+// Inicializar soporte de teclado
+new KeyboardSupport();
+
+// Agregar títulos con atajos de teclado
+document.getElementById('generar').title = 'Generar contraseña (Alt + G)';
+document.getElementById('copiar').title = 'Copiar contraseña (Alt + C)';
+document.getElementById('limpiar').title = 'Limpiar contraseña (Alt + L)';
+document.getElementById('theme-toggle').title = 'Cambiar tema (Alt + T)';
+document.getElementById('toggle-visibility').title = 'Mostrar/ocultar contraseña (Alt + M)';
 
 // Función para generar la contraseña
 function generar() {
