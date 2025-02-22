@@ -1,4 +1,15 @@
 import { KeyboardSupport } from './assets/js/keyboardSupport.js';
+import PasswordGenerator from './assets/js/passwordGenerator.js';
+import { PasswordStrength } from './assets/js/passwordStrength.js';
+import UI from './assets/js/ui.js';
+
+// Inicializar UI y soporte de teclado
+const ui = new UI();
+new KeyboardSupport();
+
+// Variables globales
+let historialContraseñas = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+const MAX_HISTORIAL = 5;
 
 let longitud = document.getElementById('longitud');
 let longitudValor = document.getElementById('longitudValor');
@@ -11,9 +22,6 @@ let copiarBoton = document.getElementById('copiar');
 let limpiarBoton = document.getElementById('limpiar');
 let fuerzaIndicador = document.getElementById('fuerza');
 
-const historialContraseñas = [];
-const MAX_HISTORIAL = 5;
-
 // Actualizar el valor mostrado de la longitud de la contraseña
 longitud.addEventListener('input', function() {
     longitudValor.textContent = longitud.value;
@@ -21,27 +29,47 @@ longitud.addEventListener('input', function() {
 
 // Configuración del tema
 const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.body.classList.add(savedTheme);
+const preferredTheme = localStorage.getItem('theme') || 'dark';
+document.body.classList.add(preferredTheme);
 
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    document.body.classList.toggle('dark');
-    localStorage.setItem('theme', 
-        document.body.classList.contains('light') ? 'light' : 'dark'
-    );
+function toggleTheme() {
+    const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+    document.body.classList.remove('dark', 'light');
+    document.body.classList.add(newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+// Event listeners para el tema
+themeToggle.addEventListener('click', toggleTheme);
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.key.toLowerCase() === 't') {
+        e.preventDefault();
+        toggleTheme();
+    }
 });
 
 // Configuración de visibilidad de contraseña
-const toggleVisibility = document.getElementById('toggle-visibility');
-toggleVisibility.addEventListener('click', () => {
-    const type = contrasena.type === 'password' ? 'text' : 'password';
-    contrasena.type = type;
-    toggleVisibility.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-});
+const toggleVisibilityBtn = document.getElementById('toggle-visibility');
+const passwordInput = document.getElementById('contrasena');
 
-// Inicializar soporte de teclado
-new KeyboardSupport();
+function togglePasswordVisibility() {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleVisibilityBtn.innerHTML = '👁️‍🗨️';
+    } else {
+        passwordInput.type = 'password';
+        toggleVisibilityBtn.innerHTML = '👁️';
+    }
+}
+
+// Event listeners para mostrar/ocultar contraseña
+toggleVisibilityBtn.addEventListener('click', togglePasswordVisibility);
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.key.toLowerCase() === 'm') {
+        e.preventDefault();
+        togglePasswordVisibility();
+    }
+});
 
 // Agregar títulos con atajos de teclado
 document.getElementById('generar').title = 'Generar contraseña (Alt + G)';
@@ -52,17 +80,13 @@ document.getElementById('toggle-visibility').title = 'Mostrar/ocultar contraseñ
 
 // Función para generar la contraseña
 function generar() {
-    let caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyz';
-    if (mayusculas.checked) caracteresPermitidos += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    if (numeros.checked) caracteresPermitidos += '0123456789';
-    if (simbolos.checked) caracteresPermitidos += '!@#$%^&*()_+[]{}|;:,.<>?';
+    const options = {
+        mayusculas: mayusculas.checked,
+        numeros: numeros.checked,
+        simbolos: simbolos.checked
+    };
 
-    let password = '';
-    for (let i = 0; i < longitud.value; i++) {
-        let caracterAleatorio = caracteresPermitidos[Math.floor(Math.random() * caracteresPermitidos.length)];
-        password += caracterAleatorio;
-    }
-
+    const password = PasswordGenerator.generateSecure(parseInt(longitud.value), options);
     contrasena.value = password;
     evaluarFuerza(password);
 
@@ -73,6 +97,7 @@ function generar() {
             historialContraseñas.pop();
         }
         actualizarHistorial();
+        localStorage.setItem('passwordHistory', JSON.stringify(historialContraseñas));
     }
 }
 
@@ -101,40 +126,44 @@ function limpiarContrasena() {
 
 // Función mejorada para evaluar la fuerza
 function evaluarFuerza(password) {
-    let score = 0;
+    const score = PasswordGenerator.evaluateStrength(password);
     const strengthMeter = document.getElementById('strengthMeter');
     
-    // Longitud (máximo 2 puntos)
-    if (password.length >= 12) score += 2;
-    else if (password.length >= 8) score += 1;
-
-    // Tipos de caracteres (máximo 4 puntos)
-    if (password.match(/[a-z]/)) score += 1;
-    if (password.match(/[A-Z]/)) score += 1;
-    if (password.match(/[0-9]/)) score += 1;
-    if (password.match(/[^a-zA-Z0-9]/)) score += 1;
-
     // Actualizar indicador visual
     strengthMeter.className = 'strength-meter';
     fuerzaIndicador.style.color = '';
 
-    // Determinar nivel basado en score total (máximo 6 puntos)
-    if (score <= 2) {
-        fuerzaIndicador.textContent = "Débil";
-        fuerzaIndicador.style.color = "#ff4444";
-        strengthMeter.classList.add('weak');
-    } else if (score <= 3) {
-        fuerzaIndicador.textContent = "Moderada";
-        fuerzaIndicador.style.color = "#ffbb33";
-        strengthMeter.classList.add('moderate');
-    } else if (score <= 4) {
-        fuerzaIndicador.textContent = "Fuerte";
-        fuerzaIndicador.style.color = "#00C851";
-        strengthMeter.classList.add('strong');
-    } else {
-        fuerzaIndicador.textContent = "Muy fuerte";
-        fuerzaIndicador.style.color = "#007E33";
-        strengthMeter.classList.add('very-strong');
+    // Determinar nivel basado en score
+    const levels = [
+        { score: 2, text: "Débil", color: "#ff4444", class: "weak" },
+        { score: 3, text: "Moderada", color: "#ffbb33", class: "moderate" },
+        { score: 4, text: "Fuerte", color: "#00C851", class: "strong" },
+        { score: 5, text: "Muy fuerte", color: "#007E33", class: "very-strong" }
+    ];
+
+    const level = levels.find(l => score <= l.score) || levels[levels.length - 1];
+    fuerzaIndicador.textContent = level.text;
+    fuerzaIndicador.style.color = level.color;
+    strengthMeter.classList.add(level.class);
+
+    // Actualizar análisis detallado
+    const validations = PasswordGenerator.validatePassword(password);
+    const crackTime = PasswordStrength.estimateCrackTime(password);
+    actualizarAnalisis(validations, crackTime);
+}
+
+function actualizarAnalisis(validations, crackTime) {
+    Object.entries(validations).forEach(([check, isValid]) => {
+        const element = document.querySelector(`[data-check="${check}"]`);
+        if (element) {
+            element.className = isValid ? 'valid' : 'invalid';
+            element.textContent = `${isValid ? '✓' : '✗'} ${element.textContent.split(' ').slice(1).join(' ')}`;
+        }
+    });
+
+    const crackTimeElement = document.querySelector('.crack-time');
+    if (crackTimeElement) {
+        crackTimeElement.textContent = `Tiempo estimado de crackeo: ${crackTime}`;
     }
 }
 
@@ -178,6 +207,12 @@ function exportarContraseñas() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+}
+
+// Agregar el event listener para el botón de exportar
+const exportarBoton = document.getElementById('exportar');
+if (exportarBoton) {
+    exportarBoton.addEventListener('click', exportarContraseñas);
 }
 
 boton.addEventListener('click', generar);

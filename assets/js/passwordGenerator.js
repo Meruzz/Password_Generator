@@ -45,6 +45,25 @@ class PasswordGenerator {
 
         return Math.min(5, score); // Máximo 5 puntos
     }
+
+    static validatePassword(password) {
+        const checks = {
+            length: password.length >= 8,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            numbers: /[0-9]/.test(password),
+            symbols: /[^A-Za-z0-9]/.test(password),
+            commonWords: !this.containsCommonWords(password),
+            repeatedChars: !(/(.)\1{2,}/).test(password)
+        };
+        
+        return checks;
+    }
+
+    static containsCommonWords(password) {
+        const commonWords = ['password', '123456', 'qwerty', 'admin'];
+        return commonWords.some(word => password.toLowerCase().includes(word));
+    }
 }
 
 export default PasswordGenerator;

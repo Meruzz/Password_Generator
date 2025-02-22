@@ -86,7 +86,7 @@
                 <div class="container__campo resultado">
                     <div class="password-wrapper">
                         <input class="container__contrasena" type="password" id="contrasena" placeholder="Tu contraseña aparecerá aquí" readonly>
-                        <button id="toggle-visibility" class="toggle-visibility" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+                        <button type="button" id="toggle-visibility" class="toggle-visibility" aria-label="Mostrar/Ocultar contraseña">👁️</button>
                     </div>
                     <button class="boton boton--copiar" id="copiar">Copiar</button>
                     <button class="boton boton--limpiar" id="limpiar">Limpiar</button>
@@ -94,6 +94,19 @@
                 <div class="container__campo fuerza">
                     <p>Fuerza de la contraseña: <span id="fuerza"></span></p>
                     <div class="strength-meter" id="strengthMeter"></div>
+                    <div class="password-analysis">
+                        <h4>Análisis de seguridad</h4>
+                        <ul class="analysis-list">
+                            <li data-check="length">Longitud mínima (8+ caracteres)</li>
+                            <li data-check="uppercase">Incluye mayúsculas</li>
+                            <li data-check="lowercase">Incluye minúsculas</li>
+                            <li data-check="numbers">Incluye números</li>
+                            <li data-check="symbols">Incluye símbolos</li>
+                            <li data-check="commonWords">Sin palabras comunes</li>
+                            <li data-check="repeatedChars">Sin caracteres repetidos</li>
+                        </ul>
+                        <p class="crack-time"></p>
+                    </div>
                 </div>
                 <div class="container__campo">
                     <div id="notificacion" class="notificacion"></div>
@@ -101,7 +114,7 @@
                 <div class="container__historial">
                     <h3>Historial de contraseñas generadas</h3>
                     <ul id="historial-lista"></ul>
-                    <button class="boton boton--exportar" onclick="exportarContraseñas()">
+                    <button class="boton boton--exportar" id="exportar">
                         Exportar historial
                     </button>
                 </div>

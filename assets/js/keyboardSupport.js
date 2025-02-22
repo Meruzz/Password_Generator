@@ -17,30 +17,21 @@ export class KeyboardSupport {
 
     setupKeyboardListeners() {
         document.addEventListener('keydown', (e) => {
-            // Generar contraseña
-            if (e.altKey && e.key.toLowerCase() === 'g') {
-                e.preventDefault();
-                document.getElementById('generar').click();
-            }
-            // Copiar contraseña
-            else if (e.altKey && e.key.toLowerCase() === 'c') {
-                e.preventDefault();
-                document.getElementById('copiar').click();
-            }
-            // Limpiar contraseña
-            else if (e.altKey && e.key.toLowerCase() === 'l') {
-                e.preventDefault();
-                document.getElementById('limpiar').click();
-            }
-            // Cambiar tema
-            else if (e.altKey && e.key.toLowerCase() === 't') {
-                e.preventDefault();
-                document.getElementById('theme-toggle').click();
-            }
-            // Mostrar/ocultar contraseña
-            else if (e.altKey && e.key.toLowerCase() === 'm') {
-                e.preventDefault();
-                document.getElementById('toggle-visibility').click();
+            if (e.altKey) {
+                switch(e.key.toLowerCase()) {
+                    case 'g':
+                        e.preventDefault();
+                        document.getElementById('generar')?.click();
+                        break;
+                    case 'c':
+                        e.preventDefault();
+                        document.getElementById('copiar')?.click();
+                        break;
+                    case 'l':
+                        e.preventDefault();
+                        document.getElementById('limpiar')?.click();
+                        break;
+                }
             }
         });
 

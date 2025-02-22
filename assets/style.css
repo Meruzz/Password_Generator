@@ -506,3 +506,47 @@ kbd {
     border-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
 }
+
+/* Estilos para el Análisis */
+.password-analysis {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.password-analysis h4 {
+    color: #1875E8;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.analysis-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.analysis-list li {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.analysis-list li.valid {
+    opacity: 1;
+    color: #00C851;
+}
+
+.analysis-list li.invalid {
+    opacity: 1;
+    color: #ff4444;
+}
+
+.analysis-list li::before {
+    content: '•';
+    margin-right: 8px;
+    color: currentColor;
+}
