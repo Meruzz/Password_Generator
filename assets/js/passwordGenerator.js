@@ -30,7 +30,8 @@ class PasswordGenerator {
         let score = 0;
         
         // Longitud
-        if (password.length >= 12) score += 2;
+        if (password.length >= 16) score += 3;
+        else if (password.length >= 12) score += 2;
         else if (password.length >= 8) score += 1;
 
         // Complejidad
@@ -43,7 +44,11 @@ class PasswordGenerator {
         const uniqueChars = new Set(password).size;
         score += Math.floor(uniqueChars / 4);
 
-        return Math.min(5, score); // Máximo 5 puntos
+        // Penalizaciones
+        if (password.length < 8) score -= 1;
+        if (/^(.)\1+$/.test(password)) score -= 2; // Penalizar contraseñas con caracteres repetidos
+
+        return Math.max(0, Math.min(5, score)); // Asegurar que el score esté entre 0 y 5
     }
 
     static validatePassword(password) {

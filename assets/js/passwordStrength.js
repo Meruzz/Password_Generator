@@ -18,10 +18,24 @@ export class PasswordStrength {
     }
 
     static formatTime(seconds) {
-        if (seconds < 60) return `${Math.round(seconds)} segundos`;
-        if (seconds < 3600) return `${Math.round(seconds / 60)} minutos`;
-        if (seconds < 86400) return `${Math.round(seconds / 3600)} horas`;
-        if (seconds < 31536000) return `${Math.round(seconds / 86400)} días`;
-        return `${Math.round(seconds / 31536000)} años`;
+        const units = [
+            { label: 'años', value: 31536000 },
+            { label: 'días', value: 86400 },
+            { label: 'hrs', value: 3600 },
+            { label: 'mins', value: 60 },
+            { label: 'segs', value: 1 }
+        ];
+
+        for (const unit of units) {
+            if (seconds >= unit.value) {
+                const value = Math.round(seconds / unit.value);
+                if (unit.label === 'años' && value > 1e9) {
+                    return 'más de mil millones de años';
+                }
+                return `${value} ${unit.label}`;
+            }
+        }
+
+        return `${seconds.toFixed(2)} segs`;
     }
 }

@@ -90,6 +90,7 @@ function evaluarFuerza(password) {
 
     // Determinar nivel basado en score
     const levels = [
+        { score: 1, text: "Muy débil", color: "#ff4444", class: "very-weak" },
         { score: 2, text: "Débil", color: "#ff4444", class: "weak" },
         { score: 3, text: "Moderada", color: "#ffbb33", class: "moderate" },
         { score: 4, text: "Fuerte", color: "#00C851", class: "strong" },
