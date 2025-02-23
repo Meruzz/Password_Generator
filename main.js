@@ -27,56 +27,11 @@ longitud.addEventListener('input', function() {
     longitudValor.textContent = longitud.value;
 });
 
-// Configuración del tema
-const themeToggle = document.getElementById('theme-toggle');
-const preferredTheme = localStorage.getItem('theme') || 'dark';
-document.body.classList.add(preferredTheme);
-
-function toggleTheme() {
-    const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
-    document.body.classList.remove('dark', 'light');
-    document.body.classList.add(newTheme);
-    localStorage.setItem('theme', newTheme);
-}
-
-// Event listeners para el tema
-themeToggle.addEventListener('click', toggleTheme);
-document.addEventListener('keydown', (e) => {
-    if (e.altKey && e.key.toLowerCase() === 't') {
-        e.preventDefault();
-        toggleTheme();
-    }
-});
-
-// Configuración de visibilidad de contraseña
-const toggleVisibilityBtn = document.getElementById('toggle-visibility');
-const passwordInput = document.getElementById('contrasena');
-
-function togglePasswordVisibility() {
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleVisibilityBtn.innerHTML = '👁️‍🗨️';
-    } else {
-        passwordInput.type = 'password';
-        toggleVisibilityBtn.innerHTML = '👁️';
-    }
-}
-
-// Event listeners para mostrar/ocultar contraseña
-toggleVisibilityBtn.addEventListener('click', togglePasswordVisibility);
-document.addEventListener('keydown', (e) => {
-    if (e.altKey && e.key.toLowerCase() === 'm') {
-        e.preventDefault();
-        togglePasswordVisibility();
-    }
-});
-
 // Agregar títulos con atajos de teclado
 document.getElementById('generar').title = 'Generar contraseña (Alt + G)';
 document.getElementById('copiar').title = 'Copiar contraseña (Alt + C)';
 document.getElementById('limpiar').title = 'Limpiar contraseña (Alt + L)';
 document.getElementById('theme-toggle').title = 'Cambiar tema (Alt + T)';
-document.getElementById('toggle-visibility').title = 'Mostrar/ocultar contraseña (Alt + M)';
 
 // Función para generar la contraseña
 function generar() {
