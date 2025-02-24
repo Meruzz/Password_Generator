@@ -530,3 +530,161 @@ kbd {
     margin-right: 8px;
     color: currentColor;
 }
+
+/* Estilos para la página de evaluación */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: rgba(24, 117, 232, 0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(24, 117, 232, 0.4);
+    transform: translateX(-5px);
+}
+
+.descripcion {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.password-input-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-evaluate-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(24, 117, 232, 0.3);
+    border-radius: 8px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.password-evaluate-input:focus {
+    border-color: #1875E8;
+    box-shadow: 0 0 0 3px rgba(24, 117, 232, 0.2);
+}
+
+.toggle-visibility {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.boton--analizar {
+    background: linear-gradient(45deg, #1875E8, #1565C0);
+    margin-top: 1rem;
+    padding: 15px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.boton--analizar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(24, 117, 232, 0.3);
+}
+
+.security-score {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 10px solid #1875E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    font-size: 2rem;
+    font-weight: bold;
+    background: rgba(24, 117, 232, 0.1);
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.analysis-column h5 {
+    color: #1875E8;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.vulnerability-info {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.recommendations {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(24, 117, 232, 0.1);
+    border-radius: 8px;
+}
+
+.recommendations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recommendations li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.recommendations li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #1875E8;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}

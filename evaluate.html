@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Evaluar Contraseña</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body class="dark">
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌓</button>
+    <a href="index.html" class="back-button">← Volver al generador</a>
+    
+    <main class="container">
+        <div class="container__contenido">
+            <div class="container__informacion">
+                <h1>Análisis <span class="container__texto-azul">de Seguridad</span></h1>
+                <p class="descripcion">Esta herramienta evaluará la fortaleza de tu contraseña utilizando algoritmos avanzados de seguridad.</p>
+                
+                <div class="password-input-container">
+                    <div class="container__campo">
+                        <label for="passwordInput">Ingresa tu contraseña para analizar:</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="passwordInput" class="password-evaluate-input" 
+                                   placeholder="Ingresa la contraseña que deseas evaluar"
+                                   autocomplete="off">
+                            <button class="toggle-visibility" id="toggleVisibility" aria-label="Mostrar/Ocultar contraseña">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+                    <button class="boton boton--analizar" id="evaluar">Analizar Seguridad</button>
+                </div>
+
+                <div class="results-container" style="display: none;">
+                    <div class="security-score">
+                        <h3>Puntuación de Seguridad</h3>
+                        <div class="score-circle">
+                            <span id="scoreNumber">0</span>/100
+                        </div>
+                    </div>
+
+                    <div class="container__campo fuerza">
+                        <h3>Nivel de Seguridad: <span id="fuerza"></span></h3>
+                        <div class="strength-meter" id="strengthMeter"></div>
+                        
+                        <div class="password-analysis">
+                            <h4>Análisis Detallado</h4>
+                            <div class="analysis-grid">
+                                <div class="analysis-column">
+                                    <h5>Características</h5>
+                                    <ul class="analysis-list">
+                                        <li data-check="length">Longitud mínima (8+ caracteres)</li>
+                                        <li data-check="uppercase">Incluye mayúsculas</li>
+                                        <li data-check="lowercase">Incluye minúsculas</li>
+                                        <li data-check="numbers">Incluye números</li>
+                                        <li data-check="symbols">Incluye símbolos</li>
+                                        <li data-check="commonWords">Sin palabras comunes</li>
+                                        <li data-check="repeatedChars">Sin caracteres repetidos</li>
+                                    </ul>
+                                </div>
+                                <div class="analysis-column">
+                                    <h5>Vulnerabilidad</h5>
+                                    <div class="vulnerability-info">
+                                        <p class="crack-time"></p>
+                                        <div id="crackDetails"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="recommendations">
+                            <h4>Recomendaciones de Mejora</h4>
+                            <ul id="recommendationsList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>Desarrollado por un experto en seguridad informática | © 2024 Todos los derechos reservados</p>
+    </footer>
+    <script type="module" src="evaluate.js"></script>
+</body>
+</html>
