@@ -40,6 +40,35 @@ body::before {
     background-size: 100% 100%;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: containerAppear 0.5s ease-out;
+}
+
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    background: linear-gradient(45deg, 
+        rgba(24, 117, 232, 0.1),
+        rgba(24, 117, 232, 0.05),
+        rgba(255, 255, 255, 0.05)
+    );
+    z-index: -1;
 }
 
 h1 {
@@ -66,6 +95,26 @@ label {
 input[type="range"] {
     width: 100%;
     margin-top: 10px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #1875E8;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(24, 117, 232, 0.3);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(24, 117, 232, 0.5);
 }
 
 .checkbox {
@@ -75,22 +124,55 @@ input[type="range"] {
 
 .checkbox input {
     margin-right: 10px;
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+}
+
+.checkbox input:checked {
+    background: #1875E8;
+    border-color: #1565C0;
 }
 
 .boton {
-    background-color: #1875E8;
+    background: linear-gradient(45deg, #1875E8, #1565C0);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
+    padding: 15px 25px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
     width: 100%;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(24, 117, 232, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.boton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.boton:hover::before {
+    left: 100%;
 }
 
 .boton:hover {
-    background-color: #1060c0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(24, 117, 232, 0.3);
 }
 
 .resultado {
@@ -100,16 +182,24 @@ input[type="range"] {
 
 .container__contrasena {
     flex-grow: 1;
-    padding: 10px;
+    padding: 15px;
     padding-right: 40px; /* Espacio para el botón */
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background-color: rgba(255, 255, 255, 0.05);
     color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border: 2px solid rgba(24, 117, 232, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.container__contrasena:focus {
+    border-color: #1875E8;
+    box-shadow: 0 0 0 3px rgba(24, 117, 232, 0.2);
 }
 
 .boton--copiar, .boton--limpiar {
@@ -125,6 +215,59 @@ input[type="range"] {
 #fuerza {
     padding: 3px 8px;
     border-radius: 3px;
+}
+
+.strength-meter {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.strength-meter::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    transition: all 0.5s ease;
+}
+
+.strength-meter.very-weak::before { 
+    width: 20%; 
+    background: linear-gradient(90deg, #ff4444, #ff6666); 
+    animation: pulse 2s infinite;
+}
+.strength-meter.weak::before { 
+    width: 40%; 
+    background: linear-gradient(90deg, #ffbb33, #ffd966); 
+}
+.strength-meter.moderate::before { 
+    width: 60%; 
+    background: linear-gradient(90deg, #ffeb3b, #fff176); 
+}
+.strength-meter.strong::before { 
+    width: 80%; 
+    background: linear-gradient(90deg, #00C851, #00E676); 
+}
+.strength-meter.very-strong::before { 
+    width: 100%; 
+    background: linear-gradient(90deg, #007E33, #00C853);
+    animation: glow 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+@keyframes glow {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+    100% { filter: brightness(1); }
 }
 
 .container__historial {
@@ -210,11 +353,12 @@ input[type="range"] {
     position: fixed;
     top: 20px;
     right: 20px;
-    padding: 10px 20px;
-    background-color: #2ecc71;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #00C851, #007E33);
     color: white;
-    border-radius: 5px;
-    animation: fadeIn 0.3s, fadeOut 0.3s 1.7s;
+    border-radius: 8px;
+    animation: slideIn 0.3s, slideOut 0.3s 1.7s;
+    box-shadow: 0 4px 15px rgba(0, 200, 81, 0.3);
 }
 
 @keyframes fadeIn {
@@ -225,6 +369,28 @@ input[type="range"] {
 @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -628,7 +794,21 @@ kbd {
     margin: 1rem auto;
     font-size: 2rem;
     font-weight: bold;
-    background: rgba(24, 117, 232, 0.1);
+    background: linear-gradient(45deg, rgba(24, 117, 232, 0.1), rgba(24, 117, 232, 0.2));
+    box-shadow: 0 0 20px rgba(24, 117, 232, 0.2);
+    position: relative;
+    animation: scoreAppear 1s ease-out;
+}
+
+@keyframes scoreAppear {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .analysis-grid {
@@ -666,6 +846,25 @@ kbd {
     margin: 0.5rem 0;
     padding-left: 1.5rem;
     position: relative;
+    animation: slideInLeft 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.recommendations li:nth-child(1) { animation-delay: 0.1s; }
+.recommendations li:nth-child(2) { animation-delay: 0.2s; }
+.recommendations li:nth-child(3) { animation-delay: 0.3s; }
+.recommendations li:nth-child(4) { animation-delay: 0.4s; }
+.recommendations li:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .recommendations li::before {
@@ -687,4 +886,17 @@ kbd {
     .analysis-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Efecto de cristal mejorado */
+.container, 
+.password-input-container,
+.security-score,
+.vulnerability-info,
+.recommendations {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.15),
+        inset 0 0 32px rgba(255, 255, 255, 0.05);
 }
